@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {BackendService} from '../services/backend.service';
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {AddPositionPopupComponent} from './add-position-popup.component';
 
 @Component({
   selector: 'app-employment-table',
@@ -8,8 +11,23 @@ import {Component, OnInit} from '@angular/core';
 export class EmploymentTableComponent implements OnInit {
   public displayedColumns = ['position', 'name', 'salary', 'assignDate', 'firedDate'];
   public employees = [];
-  constructor() {
+  public pagesAmount = 0;
+  public pageSize = 10;
+  constructor(private backEndService: BackendService, private dialog: MatDialog) {
+  }
+  public addPosition(): void {
+    const dialogRef = this.dialog.open(AddPositionPopupComponent, {
+      width: '250px',
+    });
+    dialogRef.afterClosed().subscribe();
+  }
+  public addCandidate(): void {
+
   }
   ngOnInit() {
+    this.backEndService.getEmployeeRecords(0, this.pageSize).subscribe(x => {
+      this.pagesAmount = Math.ceil(x.totalAmount / this.pageSize);
+      this.employees = x.employees;
+    });
   }
 }

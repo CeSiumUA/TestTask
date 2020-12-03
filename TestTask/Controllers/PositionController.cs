@@ -19,15 +19,13 @@ namespace TestTask.Controllers
             this.databaseContext = databaseContext;
         }
         [HttpPost("addposition")]
-        public async Task<IActionResult> AddPosition([FromBody] string PositionName)
+        public async Task<IActionResult> AddPosition([FromBody] Position Position)
         {
-            if ((await databaseContext.Positions.FirstOrDefaultAsync(x => x.PositionName == PositionName)) != null)
+            if ((await databaseContext.Positions.FirstOrDefaultAsync(x => x.PositionName == Position.PositionName)) != null)
             {
                 return Conflict();
             }
-            Position position = new Position();
-            position.PositionName = PositionName;
-            await databaseContext.Positions.AddAsync(position);
+            await databaseContext.Positions.AddAsync(Position);
             await databaseContext.SaveChangesAsync();
             return Ok();
         }
