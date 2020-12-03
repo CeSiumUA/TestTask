@@ -9,7 +9,7 @@ import {BackendService} from '../services/backend.service';
       '<div mat-dialog-content>' +
         '<mat-form-field>' +
           '<mat-label>Должность</mat-label>' +
-          '<input matInput [(ngModel)]="position">' +
+          '<input matInput [(ngModel)]="position" required>' +
           '<mat-hint align="start"><span style="color: red;">{{errorMessage}}</span></mat-hint>' +
         '</mat-form-field>' +
       '</div>' +

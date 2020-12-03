@@ -15,6 +15,6 @@ namespace TestTask.Models
         public Employee Employee { get; set; }
         public double Salary { get; set; }
         public DateTime AssignDate { get; set; }
-        public DateTime FiredDate { get; set; }
+        public DateTime? FiredDate { get; set; }
     }
 }

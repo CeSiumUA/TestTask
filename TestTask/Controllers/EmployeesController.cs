@@ -41,12 +41,28 @@ namespace TestTask.Controllers
                 };
                 await databaseContext.Employees.AddAsync(employee);
             }
+
+            EmployeePosition.FiredDate = (EmployeePosition.FiredDate.HasValue)
+                ? (EmployeePosition.FiredDate.Value.Year == 1) ? null : EmployeePosition.FiredDate
+                : null;
             EmployeePosition.Employee = employee;
+            EmployeePosition.Position =
+                await databaseContext.Positions.FirstOrDefaultAsync(x => x.Id == EmployeePosition.Position.Id);
             await databaseContext.EmployeePositions.AddAsync(EmployeePosition);
             await databaseContext.SaveChangesAsync();
             return Ok();
         }
 
+        [HttpGet("firstnames/{firstname}")]
+        public async Task<IActionResult> GetFirstName([FromRoute]string firstname)
+        {
+            return new JsonResult(await databaseContext.Employees.Select(x => x.FirstName).Where(x => x.ToLower().Contains(firstname.ToLower())).ToListAsync());
+        }
+        [HttpGet("lastnames/{lastname}")]
+        public async Task<IActionResult> GetLastName([FromRoute] string lastname)
+        {
+            return new JsonResult(await databaseContext.Employees.Select(x => x.LastName).Where(x => x.ToLower().Contains(lastname.ToLower())).ToListAsync());
+        }
         [HttpGet("employees")]
         public async Task<IActionResult> GetEmployees([FromQuery] int skip, [FromQuery] int take)
         {
@@ -58,6 +74,24 @@ namespace TestTask.Controllers
             }
 
             var totalAmount = await databaseContext.EmployeePositions.CountAsync();
+            var result = new
+            {
+                employees = employees,
+                totalAmount = totalAmount
+            };
+            return new JsonResult(result);
+        }
+        [HttpGet("workingemployees")]
+        public async Task<IActionResult> GetWorkingEmployees([FromQuery] int skip, [FromQuery] int take)
+        {
+            List<EmployeePosition> employees = null;
+            if (take > 0)
+            {
+                employees = await databaseContext.EmployeePositions.Include(x => x.Employee).Include(x => x.Position)
+                    .OrderBy(x => x.Id).Where(x => x.FiredDate == null).Skip(skip).Take(take).ToListAsync();
+            }
+
+            var totalAmount = await databaseContext.EmployeePositions.Where(x => x.FiredDate == null).CountAsync();
             var result = new
             {
                 employees = employees,
