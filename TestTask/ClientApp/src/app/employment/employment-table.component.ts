@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {AddPositionPopupComponent} from './add-position-popup.component';
+import {AddCandidatePopupComponent} from './add-candidate-popup.component';
 
 @Component({
   selector: 'app-employment-table',
@@ -22,7 +23,10 @@ export class EmploymentTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe();
   }
   public addCandidate(): void {
-
+    const dialogRef = this.dialog.open(AddCandidatePopupComponent, {
+      width: '260px'
+    });
+    dialogRef.afterClosed().subscribe();
   }
   ngOnInit() {
     this.backEndService.getEmployeeRecords(0, this.pageSize).subscribe(x => {

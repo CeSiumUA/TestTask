@@ -37,6 +37,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {AppHttpInterceptor} from './services/apphttp.interceptor';
+import {AddCandidatePopupComponent} from './employment/add-candidate-popup.component';
+import {CurrencyPipe} from '@angular/common';
 
 const homeRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'employees'},
@@ -47,10 +49,12 @@ const homeRoutes: Routes = [
   declarations: [
     AppComponent,
     EmploymentTableComponent,
-    AddPositionPopupComponent
+    AddPositionPopupComponent,
+    AddCandidatePopupComponent
   ],
   entryComponents: [
-    AddPositionPopupComponent
+    AddPositionPopupComponent,
+    AddCandidatePopupComponent
   ],
   imports: [
     RouterModule.forRoot(homeRoutes),
@@ -113,7 +117,8 @@ const homeRoutes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
       multi: true
-    }
+    },
+    CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })

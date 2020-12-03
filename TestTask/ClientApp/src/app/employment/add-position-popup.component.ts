@@ -14,7 +14,7 @@ import {BackendService} from '../services/backend.service';
         '</mat-form-field>' +
       '</div>' +
       '<div mat-dialog-actions>' +
-        '<button mat-button (click)="onNoClick()">Отмена</button>' +
+        '<button mat-button (click)="onNoClick()">Закрыть</button>' +
         '<button mat-button (click)="onAddPosition()">Добавить</button>' +
       '</div>' +
     '</div>' +
@@ -31,7 +31,6 @@ export class AddPositionPopupComponent {
   onAddPosition(): void {
     this.requestProcessing = true;
     this.backEndService.addPosition(this.position).subscribe(x => {
-      console.log(x);
       this.requestProcessing = false;
       this.onNoClick();
     }, error => {

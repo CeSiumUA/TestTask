@@ -21,7 +21,7 @@ namespace TestTask.Controllers
         [HttpPost("addposition")]
         public async Task<IActionResult> AddPosition([FromBody] Position Position)
         {
-            if ((await databaseContext.Positions.FirstOrDefaultAsync(x => x.PositionName == Position.PositionName)) != null)
+            if ((await databaseContext.Positions.FirstOrDefaultAsync(x => x.PositionName.ToLower() == Position.PositionName.ToLower())) != null)
             {
                 return Conflict();
             }

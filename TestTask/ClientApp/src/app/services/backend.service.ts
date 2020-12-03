@@ -16,4 +16,10 @@ export class BackendService {
       PositionName: position
     });
   }
+  public getPositions(): Observable<any> {
+    return this.httpClient.get(`/api/position/positions`);
+  }
+  public addEmployee(employeePosition: any): Observable<any> {
+    return this.httpClient.post(`/api/employees/employeecreate`, employeePosition);
+  }
 }
