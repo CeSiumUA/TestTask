@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {BackendService} from '../services/backend.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-add-position-popup',

@@ -21,6 +21,7 @@ namespace TestTask.Controllers
         [HttpPost("employeecreate")]
         public async Task<IActionResult> AddEmployee([FromBody] EmployeePosition EmployeePosition)
         {
+            if (EmployeePosition.Position == null) return BadRequest();
             var existingEmployeePosition = await databaseContext.EmployeePositions.Include(x => x.Position).Include(x => x.Employee)
                 .FirstOrDefaultAsync(x =>
                     x.AssignDate == EmployeePosition.AssignDate && x.FiredDate == EmployeePosition.FiredDate &&
