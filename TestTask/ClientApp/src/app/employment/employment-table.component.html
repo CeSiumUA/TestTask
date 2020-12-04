@@ -3,6 +3,7 @@
     <button mat-raised-button (click)="addCandidate()" color="primary">Добавить сотрудника</button>
     <button mat-raised-button (click)="addPosition()" color="primary">Добавить должность</button>
   </div>
+  <mat-progress-bar mode="intermediate" *ngIf="dataLoading"></mat-progress-bar>
   <table mat-table [dataSource]="employees" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>#</th>

@@ -86,8 +86,8 @@ export class AddCandidatePopupComponent implements OnInit {
               private currencyPipe: CurrencyPipe,
               public backEndService: BackendService,
               public fb: FormBuilder) {
-    this.formGroup.controls.employee.controls.firstName.valueChanges.subscribe(x => this.firstNameChanged(x));
-    this.formGroup.controls.employee.controls.lastName.valueChanges.subscribe(x => this.lastNameChanged(x));
+    this.formGroup.get('employee')['controls'].firstName.valueChanges.subscribe(x => this.firstNameChanged(x));
+    this.formGroup.get('employee')['controls'].lastName.valueChanges.subscribe(x => this.lastNameChanged(x));
   }
   onAddPosition(): void {
     this.requestProcessing = true;

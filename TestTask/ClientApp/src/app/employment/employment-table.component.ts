@@ -16,6 +16,7 @@ export class EmploymentTableComponent implements OnInit {
   public pageSize = 10;
   public availablePageSizes;
   public getWorkingOnly = false;
+  public dataLoading = false;
   constructor(private backEndService: BackendService, private dialog: MatDialog) {
   }
   public addPosition(): void {
@@ -38,6 +39,7 @@ export class EmploymentTableComponent implements OnInit {
   }
   public getRecords(skip = 0): void {
     let subscription = null;
+    this.dataLoading = true;
     if (this.getWorkingOnly) {
       subscription = this.backEndService.getWorkingEmployeeRecords(skip * this.pageSize, this.pageSize);
     } else {
@@ -46,6 +48,7 @@ export class EmploymentTableComponent implements OnInit {
     subscription.subscribe(x => {
       this.pagesAmount = x.totalAmount; // Math.ceil(x.totalAmount / this.pageSize);
       this.availablePageSizes = [5, 10, 25, 100, this.pagesAmount];
+      this.dataLoading = false;
       this.employees = x.employees;
     });
   }
